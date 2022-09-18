@@ -22,8 +22,11 @@ const bastekProductsContainer = $.querySelector('.cart-items');
 const removeAllProductsBtn = $.querySelector('#remove-all-products');
 const cartTotalPriceElem = $.querySelector('.cart-total-price');
 
+let listProductsFragment = $.createDocumentFragment();
+let baskekProductsFragment = $.createDocumentFragment();
+
 allProducts.forEach(function (product) {
-  shopItemsContainer.insertAdjacentHTML(
+  shopItems.insertAdjacentHTML(
     'beforeend',
     '<div class="shop-item"><span class="shop-item-title">' +
       product.title +
@@ -33,7 +36,12 @@ allProducts.forEach(function (product) {
       product.price +
       '</span><button class="btn btn-primary shop-item-button" onclick="addProductToBasketArray('+ product.id +')">ADD TO CART</button></div></div>'
   );
+
+  listProductsFragment.appendChild(shopItems);
+
+  shopItemsContainer.appendChild(listProductsFragment)
 });
+
 
 function addProductToBasketArray(productId) {
   let mainProduct = allProducts.find(function (product) {
@@ -58,64 +66,13 @@ function basketProductsGenerator(userBasketArray) {
   bastekProductsContainer.innerHTML = '';
 
   userBasketArray.forEach(function (product) {
-    // let basketProductContainer = $.createElement('div');
-    // basketProductContainer.classList.add('cart-row');
-
-    // let basketProductDetailsContainer = $.createElement('div');
-    // basketProductDetailsContainer.className = 'cart-item cart-column';
-
-    // let basketProductImg = $.createElement('img');
-    // basketProductImg.setAttribute('src', product.img);
-    // basketProductImg.setAttribute('width', '100');
-    // basketProductImg.setAttribute('height', '100');
-    // basketProductImg.classList.add('cart-item-image');
-
-    // let basketProductTitleSpan = $.createElement('span');
-    // basketProductTitleSpan.classList.add('cart-item-title');
-    // basketProductTitleSpan.innerHTML = product.title;
-
-    // basketProductDetailsContainer.append(
-    //   basketProductImg,
-    //   basketProductTitleSpan
-    // );
-
-    // let basketProductPriceSpan = $.createElement('span');
-    // basketProductPriceSpan.className = 'cart-price cart-column';
-    // basketProductPriceSpan.innerHTML = product.price;
-
-    // let basketProductInputsContainer = $.createElement('div');
-    // basketProductInputsContainer.className = 'cart-quantity cart-column';
-
-    // let basketProductInput = $.createElement('input');
-    // basketProductInput.className = 'cart-quantity-input';
-    // basketProductInput.value = product.count;
-    // basketProductInput.setAttribute('type', 'number');
-    // basketProductInput.addEventListener('change', function () {
-    //   updateProductCount(product.id, basketProductInput.value);
-    // });
-
-    // let basketProductRemoveBtn = $.createElement('button');
-    // basketProductRemoveBtn.className = 'btn btn-danger';
-    // basketProductRemoveBtn.innerHTML = 'Remove';
-    // basketProductRemoveBtn.addEventListener('click', function () {
-    //   removeProductFromBasket(product.id);
-    // });
-
-    // basketProductInputsContainer.append(
-    //   basketProductInput,
-    //   basketProductRemoveBtn
-    // );
-
-    // basketProductContainer.append(
-    //   basketProductDetailsContainer,
-    //   basketProductPriceSpan,
-    //   basketProductInputsContainer
-    // );
-
-    // bastekProductsContainer.append(basketProductContainer);
     
-    bastekProductsContainer.insertAdjacentHTML('beforeend', '<div class="cart-row"><div class="cart-item cart-column"><img src="'+ product.img +'" width="100" height="100" class="cart-item-image"><span class="cart-item-title">' + product.title + '</span></div><span class="cart-price cart-column">$' + product.price + '</span><div class="cart-quantity cart-column"><input class="cart-quantity-input" type="number" onchange="updateProductCount('+ product.id, basketProductInput.value +')"><button class="btn btn-danger" onclick="removeProductFromBasket('+ product.id +')">Remove</button></div></div>')
+    bastekProducts.insertAdjacentHTML('beforeend', '<div class="cart-row"><div class="cart-item cart-column"><img src="'+ product.img +'" width="100" height="100" class="cart-item-image"><span class="cart-item-title">' + product.title + '</span></div><span class="cart-price cart-column">$' + product.price + '</span><div class="cart-quantity cart-column"><input class="cart-quantity-input" type="number" onchange="updateProductCount('+ product.id, basketProductInput.value +')"><button class="btn btn-danger" onclick="removeProductFromBasket('+ product.id +')">Remove</button></div></div>')
   });
+
+  baskekProductsFragment.appendChild(bastekProducts);
+
+  bastekProductsContainer.append(baskekProductsFragment);
 }
 
 function removeProductFromBasket(productId) {
